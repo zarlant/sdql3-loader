@@ -53,6 +53,7 @@ def main():
     )
     parser.add_argument("--data-file", dest="data_file", required=True)
     parser.add_argument("--url", dest="url", help="Override default API URL")
+    parser.add_argument("-v", "--verbose", default=0, action="count", help="Show debug output")
     args = parser.parse_args()
     headers = build_headers(
         token=args.token,
@@ -74,11 +75,13 @@ def main():
         ]
         data = dict(ChainMap(*data_list))
     else:
-        data_file = open(args.data_file, "r")
-        data = json.load(data_file)
+        with open(args.data_file, "r") as data_file:
+            data = json.load(data_file)
 
-    # print(headers)
-    # print(data)
+    if args.verbose > 1:
+        print(f"Headers: {headers}")
+    if args.verbose > 0:
+        print(f"Data: {data}")
     if args.url:
         req = post_data(headers, data, url=args.url)
     else:

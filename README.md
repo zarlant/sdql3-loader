@@ -1,7 +1,21 @@
+# Installation
+The tool can be installed with pip /pipx or run directly from src/cli.py
+
+Installing using pipx from main sdql-loader directory:
+
+```bash
+pipx install .
+```
+
+If making local changes for testing, force a new install via:
+```bash
+pipx install . --force
+```
+
 # Usage 
-Help text found when running main.py
-```python
-python main.py --help
+Help text found when running sdql-load
+```bash
+sdql-load --help
 ```
 
 ## Finding Data
