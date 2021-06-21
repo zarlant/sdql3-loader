@@ -74,7 +74,8 @@ def main():
         ]
         data = dict(ChainMap(*data_list))
     else:
-        data = json.loads(parser.data_file)
+        data_file = open(args.data_file, "r")
+        data = json.load(data_file)
 
     # print(headers)
     # print(data)
