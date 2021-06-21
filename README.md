@@ -33,7 +33,9 @@ data = {"season": 2020}
 ```
 
 ### Storing data as raw json, filename: data.json
+```javascript
 {"season": 2020}
+```
 
 # Setup
 Currently the only dependency of this software is the python package `requests`
