@@ -40,6 +40,17 @@ def post_data(
     req = requests.post(url, headers, json=data)
     return req
 
+def process_post_data(headers, data):
+    req = post_data(headers, data)
+    if req.status_code == 200:
+        # Looks like the API is returning a 200 even in case of errors :(
+        # print("Update Successful")
+        try:
+            print(req.json())
+        except:
+            print(req.text)
+    else:
+        print(f"Error: {req.status_code}. {req.text}")
 
 def main():
     parser = argparse.ArgumentParser(description="Process SDQL input data")
@@ -92,17 +103,6 @@ def main():
     else:
         process_post_data(headers, data)
 
-def process_post_data(headers, data):
-    req = post_data(headers, data)
-    if req.status_code == 200:
-        # Looks like the API is returning a 200 even in case of errors :(
-        # print("Update Successful")
-        try:
-            print(req.json())
-        except:
-            print(req.text)
-    else:
-        print(f"Error: {req.status_code}. {req.text}")
 
 if __name__ == "__main__":
     main()
