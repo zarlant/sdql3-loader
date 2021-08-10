@@ -44,7 +44,7 @@ def post_data(
 def main():
     parser = argparse.ArgumentParser(description="Process SDQL input data")
     parser.add_argument("--token", dest="token", required=True)
-    parser.add_argument("--client", dest="client", required=True)
+    parser.add_argument("--user", dest="user", required=True)
     parser.add_argument(
         "--action", dest="action", required=True, choices=[x.name for x in list(Action)]
     )
@@ -57,7 +57,7 @@ def main():
     args = parser.parse_args()
     headers = build_headers(
         token=args.token,
-        client=args.client,
+        user=args.user,
         league=League[args.league],
         action=Action[args.action],
     )
