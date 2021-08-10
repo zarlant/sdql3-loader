@@ -9,7 +9,6 @@ import sys
 from time import sleep
 
 import requests
-global current_errors = 0
 
 class League(Enum):
     NBA = "NBA"
@@ -41,19 +40,18 @@ def post_data(
     req = requests.post(url, headers=headers, json=data)
     return req
 
-def process_post_data(headers, data):
+def process_post_data(headers, data, current_errors=0):
     req = post_data(headers=headers, data=data)
     if req.status_code == 200:
-        current_errors = 0
         # Looks like the API is returning a 200 even in case of errors :(
         try:
             print(req.json())
         except:
             print(req.text)
     if req.status_code == 503:
-        current_errors += .5
+        current_errors += 1
         sleep(current_errors)
-        process_post_data(headers, data)
+        process_post_data(headers, data, current_errors=current_errors)
     else:
         print(f"Error: {req.status_code}. {req.text}")
 
