@@ -54,6 +54,7 @@ def main():
     parser.add_argument("--data-file", dest="data_file", required=True)
     parser.add_argument("--url", dest="url", help="Override default API URL")
     parser.add_argument("-v", "--verbose", default=0, action="count", help="Show debug output")
+    parser.add_argument("-s", "--split-data", dest="split_data", default=False, action="store_true")
     args = parser.parse_args()
     headers = build_headers(
         token=args.token,
@@ -84,9 +85,15 @@ def main():
     if args.verbose > 2:
         print(f"Data: {data}")
     if args.url:
-        req = post_data(headers, data, url=args.url)
+        url = args.url
+    if args.split_data:
+        for d in data:
+            process_post_data(headers, d)
     else:
-        req = post_data(headers, data)
+        process_post_data(headers, data)
+
+def process_post_data(headers, data):
+    req = post_data(headers, data)
     if req.status_code == 200:
         # Looks like the API is returning a 200 even in case of errors :(
         # print("Update Successful")
@@ -96,7 +103,6 @@ def main():
             print(req.text)
     else:
         print(f"Error: {req.status_code}. {req.text}")
-
 
 if __name__ == "__main__":
     main()
