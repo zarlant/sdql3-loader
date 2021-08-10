@@ -25,10 +25,10 @@ class Action(Enum):
     Build = "build"
 
 
-def build_headers(token: str, client: str, league: League, action: Action):
+def build_headers(token: str, user: str, league: League, action: Action):
     return {
         "token": token,
-        "client": client,
+        "user": user,
         "league": league.value,
         "action": action.value,
     }
