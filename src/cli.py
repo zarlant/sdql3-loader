@@ -6,9 +6,10 @@ import json
 import os
 from typing import Dict
 import sys
+from time import sleep
 
 import requests
-
+current_errors = 0
 
 class League(Enum):
     NBA = "NBA"
@@ -37,18 +38,22 @@ def build_headers(token: str, user: str, league: League, action: Action):
 def post_data(
     headers: Dict[str, str], data: Dict, url: str = "https://s3.sportsdatabase.com/api"
 ):
-    req = requests.post(url, headers, json=data)
+    req = requests.post(url, headers=headers, json=data)
     return req
 
 def process_post_data(headers, data):
-    req = post_data(headers, data)
+    req = post_data(headers=headers, data=data)
     if req.status_code == 200:
+        current_errors = 0
         # Looks like the API is returning a 200 even in case of errors :(
-        # print("Update Successful")
         try:
             print(req.json())
         except:
             print(req.text)
+    if req.status_code == 503:
+        current_errors += .5
+        sleep(current_errors)
+        process_post_data(headers, data)
     else:
         print(f"Error: {req.status_code}. {req.text}")
 
