@@ -28,7 +28,7 @@ class Action(Enum):
 def build_headers(token: str, user: str, league: League, action: Action):
     return {
         "token": token,
-        "user": user,
+        "username": user,
         "league": league.value,
         "action": action.value,
     }
