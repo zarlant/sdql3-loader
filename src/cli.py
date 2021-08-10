@@ -51,7 +51,7 @@ def process_post_data(headers, data, current_errors=0):
     if req.status_code == 503:
         current_errors += 1
         sleep(current_errors)
-        process_post_data(headers, data, current_errors=current_errors)
+        return process_post_data(headers, data, current_errors=current_errors)
     else:
         print(f"Error: {req.status_code}. {req.text}")
 
