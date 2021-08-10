@@ -77,10 +77,12 @@ def main():
     else:
         with open(args.data_file, "r") as data_file:
             data = json.load(data_file)
-
-    if args.verbose > 1:
-        print(f"Headers: {headers}")
+    print(args.verbose)
     if args.verbose > 0:
+        print(f"Headers: {headers}")
+    if args.verbose > 1:
+        print(f"Data: {data}")
+    if args.verbose > 2:
         print(f"Data: {data}")
     if args.url:
         req = post_data(headers, data, url=args.url)
