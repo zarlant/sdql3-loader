@@ -9,7 +9,7 @@ import sys
 from time import sleep
 
 import requests
-current_errors = 0
+global current_errors = 0
 
 class League(Enum):
     NBA = "NBA"
