@@ -48,12 +48,14 @@ def process_post_data(headers, data, current_errors=0):
             print(req.json())
         except:
             print(req.text)
+        return
     if req.status_code == 503:
         current_errors += 1
+        print(f"Sleeping for: {current_errors}")
         sleep(current_errors)
         return process_post_data(headers, data, current_errors=current_errors)
     else:
-        print(f"Error: {req.status_code}. {req.text}")
+        print(f"Status: {req.status_code}. {req.text}")
 
 def main():
     parser = argparse.ArgumentParser(description="Process SDQL input data")
